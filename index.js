@@ -1,8 +1,8 @@
-process.stdout.write('\x1B[2J\x1B[0f') // Clear terminal screen
+process.stdout.write('\x1B[2J\x1B[0f') // Limpia la terminal
 
 const express = require('express')
 const app = express()
-const morgan = require('morgan')
+const morgan = require('morgan') // Permite ver por consola las peticiones que van llegando al servidor.
 
 // Middelwares
 app.use(morgan('dev'))
