@@ -8,17 +8,16 @@ router.get('/', (req, res) => {
   res.json(brands)
 })
 
-// add new
+// find by id
 router.get('/:id', (req, res) => {
   const { id } = req.params
   for (let i = 0; i < brands.length; i++) {
     if (id === brands[i].id) {
       res.json(brands[i])
-    } else {
-      res.status(500).json('Error')
     }
   }
 })
+
 // add new post
 router.post('/', (req, res) => {
   const { title, pais } = req.body // Los datos que quiero introducir
