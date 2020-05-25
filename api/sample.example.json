@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Burberry",
+    "pais": "Inglaterra"
+  },
+  {
+    "id": "2",
+    "title": "Nike",
+    "pais": "EEUU"
+  },
+  {
+    "id": "3",
+    "title": "Loewe",
+    "pais": "España"
+  },
+  {
+    "id": "4",
+    "title": "Adidas",
+    "pais": "Alemania"
+  }
+]

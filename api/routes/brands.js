@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const fs = require('fs')
 const brands = require('../sample.json')
-
+const uuid = require('uuid')
 const _ = require('underscore')
 
 router.get('/', (req, res) => {
@@ -18,12 +18,11 @@ router.get('/:id', (req, res) => {
   }
 })
 
-// add new post
+// add new
 router.post('/', (req, res) => {
   const { title, pais } = req.body // Los datos que quiero introducir
   if (title && pais) {
-    let id = brands.length + 1
-    id = JSON.stringify(id)
+    const id = uuid.v4()
     let newBrand = { id, ...req.body } // ...req.body Inserta el objeto creado
     brands.push(newBrand)
 
@@ -32,9 +31,10 @@ router.post('/', (req, res) => {
     fs.writeFileSync('api/sample.json', newBrand, 'utf-8')
     res.json(brands)
   } else {
-    res.send('not saved')
+    res.status(500).json('Error')
   }
 })
+
 // update
 router.put('/:id', (req, res) => {
   const { id } = req.params // La Id que quiero buscar para actualizar
@@ -46,9 +46,8 @@ router.put('/:id', (req, res) => {
         brand.pais = pais
       }
     })
+    // save update
     let update = { ...req.body } // ...req.body Inserta el objeto actualizado
-
-    // update post
     update = JSON.stringify(brands)
     fs.writeFileSync('api/sample.json', update, 'utf-8')
     res.json(brands)
@@ -56,14 +55,20 @@ router.put('/:id', (req, res) => {
     res.status(500).json('Error')
   }
 })
+
+// delete
 router.delete('/:id', (req, res) => {
   const { id } = req.params
-  _.each(brands, (brand, idx) => {
-    if (brand.id === id) {
-      brands.splice(idx, 1)
+  for (let i = 0; i < brands.length; i++) {
+    if (id === brands[i].id) {
+      brands.splice([i], 1)
     }
-  })
-  res.send(brands)
+  }
+  // save delete
+  let erase = { ...req.body } // ...req.body Guarda el objeto actualizado
+  erase = JSON.stringify(brands)
+  fs.writeFileSync('api/sample.json', erase, 'utf-8')
+  res.json(brands)
 })
 
 module.exports = router
